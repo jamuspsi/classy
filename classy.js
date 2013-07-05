@@ -1,7 +1,7 @@
 /**
  * Classy - classy classes for JavaScript
  *
- * :copyright: (c) 2011 by Armin Ronacher. 
+ * :copyright: (c) 2011 by Armin Ronacher.
  * :license: BSD.
  */
 !function (definition) {
@@ -13,7 +13,9 @@
     CLASSY_VERSION = '1.4',
     context = this,
     old = context.Class,
-    disable_constructor = false;
+    disable_constructor = false,
+    UNNAMED_CLASS_COUNTER = 0;
+
 
   /* we check if $super is in use by a class if we can.  But first we have to
      check if the JavaScript interpreter supports that.  This also matches
@@ -69,6 +71,16 @@
 
   /* extend functionality */
   Class.$extend = function(properties) {
+    var classname;
+    console.log('$extend arguments ', arguments);
+    if(arguments.length == 1) {
+      classname = 'UnnamedClass' + (++UNNAMED_CLASS_COUNTER);
+      properties = arguments[0];
+    } else if(arguments.length == 2) {
+      var classname = arguments[0];
+      properties = arguments[1];
+    }
+    console.log("$extend classname ", classname);
     var super_prototype = this.prototype;
 
     /* disable constructors and instanciate prototype.  Because the
@@ -86,7 +98,7 @@
             prototype[name] = mixin[name];
         }
       }
- 
+
     /* copy class vars from the superclass */
     properties.__classvars__ = properties.__classvars__ || {};
     if (prototype.__classvars__)
@@ -123,9 +135,10 @@
       if (disable_constructor)
         return;
       var proper_this = context === this ? cheapNew(arguments.callee) : this;
+      // Allow init to inspect its own class.
+      proper_this.$class = rv;
       if (proper_this.__init__)
         proper_this.__init__.apply(proper_this, arguments);
-      proper_this.$class = rv;
       return proper_this;
     }
 
@@ -142,6 +155,11 @@
     rv.constructor = rv;
     rv.$extend = Class.$extend;
     rv.$withData = Class.$withData;
+    rv.$superclass = this;
+    rv.$class = rv;
+    rv.$classname = classname;
+
+
     return rv;
   };
 
