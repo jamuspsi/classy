@@ -158,6 +158,8 @@
     rv.$superclass = this;
     rv.$class = rv;
     rv.$classname = classname;
+    rv.$subclasses = [];
+    this.$subclasses.push(rv);
 
 
     return rv;
@@ -173,6 +175,8 @@
     }
     return rv;
   };
+
+  Class.$subclasses = [];
 
   /* export the class */
   return Class;
