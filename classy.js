@@ -72,7 +72,7 @@
   /* extend functionality */
   Class.$extend = function(properties) {
     var classname;
-    console.log('$extend arguments ', arguments);
+    //console.log('$extend arguments ', arguments);
     if(arguments.length == 1) {
       classname = 'UnnamedClass' + (++UNNAMED_CLASS_COUNTER);
       properties = arguments[0];
@@ -80,7 +80,7 @@
       var classname = arguments[0];
       properties = arguments[1];
     }
-    console.log("$extend classname ", classname);
+    //console.log("$extend classname ", classname);
     var super_prototype = this.prototype;
 
     /* disable constructors and instanciate prototype.  Because the
