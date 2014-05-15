@@ -139,6 +139,8 @@
       proper_this.$class = rv;
       if (proper_this.__init__)
         proper_this.__init__.apply(proper_this, arguments);
+      if(proper_this.__postinit__)
+        proper_this.__postinit__.apply(proper_this, arguments);
       return proper_this;
     }
 
@@ -157,10 +159,13 @@
     rv.$withData = Class.$withData;
     rv.$superclass = this;
     rv.$class = rv;
-    rv.$classname = classname;
+    rv.$classname = rv.$name = classname;
     rv.$subclasses = [];
     this.$subclasses.push(rv);
-
+    // what
+    if(prototype.__postextend__) {
+      prototype.__postextend__.apply(rv, [rv]);
+    }
 
     return rv;
   };
