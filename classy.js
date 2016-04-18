@@ -131,7 +131,7 @@
     }
 
     /* dummy constructor */
-    var rv = function() {
+    function $classy_dummy_constructor() {
       if (disable_constructor)
         return;
       var proper_this = context === this ? cheapNew(arguments.callee) : this;
@@ -143,6 +143,7 @@
         proper_this.__postinit__.apply(proper_this, arguments);
       return proper_this;
     }
+    var rv = eval("(function(){ return " + $classy_dummy_constructor.toString().replace('$classy_dummy_constructor', classname) + "; })()")
 
     /* copy all class vars over of any */
     for (var key in properties.__classvars__) {
