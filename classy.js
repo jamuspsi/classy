@@ -159,6 +159,7 @@
     rv.$extend = Class.$extend;
     rv.$withData = Class.$withData;
     rv.$superclass = this;
+    rv.$base = this;
     rv.$class = rv;
     rv.$classname = rv.$name = classname;
     rv.$subclasses = [];
