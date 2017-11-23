@@ -134,7 +134,10 @@
     function $classy_dummy_constructor() {
       if (disable_constructor)
         return;
-      var proper_this = context === this ? cheapNew(arguments.callee) : this;
+
+      // I'm not sure why we would ever not use cheapNew on this.
+      // var proper_this = context === this ? cheapNew(arguments.callee) : this;
+      var proper_this = cheapNew(arguments.callee);
       // Allow init to inspect its own class.
       proper_this.$class = rv;
       if (proper_this.__init__)
@@ -143,8 +146,32 @@
         proper_this.__postinit__.apply(proper_this, arguments);
       return proper_this;
     }
-    var rv = eval("(function(){ return " + $classy_dummy_constructor.toString().replace('$classy_dummy_constructor', classname) + "; })()")
 
+    var rv;
+    if(!/\./.test(classname) && false) {
+        rv = eval("(function(){ return " + $classy_dummy_constructor.toString().replace('$classy_dummy_constructor', classname) + "; })()")
+    } else {
+        var index = classname.indexOf('.');
+        var left = classname.substr(0, index);
+        var right = classname.substr(index + 1);
+
+        // console.log("classname is ", classname, " index is ", index, " left is ", left, " right is ", right);
+        var anonymized_dummy = $classy_dummy_constructor.toString().replace(/\$classy_dummy_constructor/g, '');
+        var fakecons = "\
+            (function() { \
+                var container = {\
+                    '$classname': " + anonymized_dummy + ",\
+                };\
+                return container['$classname']; \
+            })()";
+        fakecons = fakecons.replace(/\$classname/g, classname);
+        // console.log("Evaling:");
+        // console.log(fakecons);
+        rv = eval(fakecons);
+
+        // rv = eval("(function(){ return " + dotted_dummy.toString().replace(/\$classy_dummy_constructor/g, right).replace(/\$container/g, left) + "(); })()")
+
+    }
     /* copy all class vars over of any */
     for (var key in properties.__classvars__) {
       var value = getOwnProperty(properties.__classvars__, key);
