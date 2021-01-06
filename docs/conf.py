@@ -179,7 +179,7 @@ htmlhelp_basename = 'Classydoc'
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'Classy.tex', u'Classy Documentation',
-   u'Armin Ronacher', 'manual'),
+    u'Armin Ronacher', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -206,5 +206,5 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'classy', u'Classy Documentation',
-     [u'Armin Ronacher'], 1)
+    [u'Armin Ronacher'], 1)
 ]

@@ -2,7 +2,7 @@ var Animal = Class.$extend({
   __init__: function(options) {
     options = typeof(options) == 'object' ? options : {name: 'Animal', health: 100};
     for (var key in options) {
-      this[key] = options[key];
+    this[key] = options[key];
     }
     // required defaults
     this.name = (typeof(options.name) == 'string' ? options.name : 'Animal');

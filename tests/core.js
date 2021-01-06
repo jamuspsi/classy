@@ -58,7 +58,7 @@ test('classes can be used with or without `new`.', function() {
 test('__init__ is called with correct arguments', function() {
   var Instrument = Class.$extend({
     __init__: function(volume) {
-      this.volume = volume;
+    this.volume = volume;
     }
   });
   flute = Instrument(20);
@@ -95,7 +95,7 @@ test('mixins work', function() {
   FatMixin = {
     'is_fat': true,
     'describe': function() {
-      return this.name + ' is fat!';
+    return this.name + ' is fat!';
     }
   };
   FatCat = Cat.$extend({
@@ -141,7 +141,7 @@ test('non-new creation calls __init__ just once', function() {
   var catched = [];
   var Test = Class.$extend({
     __init__ : function() {
-      catched.push(true);
+    catched.push(true);
     }
   });
   Test();
@@ -152,11 +152,11 @@ test('non-new creation calls __init__ just once', function() {
 test('class attributes work', function() {
   var Test = Class.$extend({
     __classvars__ : {
-      foo: 23,
-      bar: 'test'
+    foo: 23,
+    bar: 'test'
     },
     __init__ : function() {
-      this.foo = 42;
+    this.foo = 42;
     }
   });
 
@@ -169,13 +169,13 @@ test('patching in prototypes', function() {
   var called = [];
   var Test = Class.$extend({
     __init__ : function() {
-      called.push(42);
+    called.push(42);
     },
     getFoo : function() {
-      return this.foo;
+    return this.foo;
     },
     toString : function() {
-      return this.foo + ' ' + this.bar;
+    return this.foo + ' ' + this.bar;
     }
   });
   var data = {'foo': 23, 'bar': 42};
@@ -199,18 +199,18 @@ test('$class gives class access', function() {
 test('class variable inheritance', function() {
   var Test = Class.$extend({
     __classvars__ : {
-      foo: 23,
-      bar: 'test'
+    foo: 23,
+    bar: 'test'
     }
   });
   var SubTest = Test.$extend({
     __classvars__ : {
-      bar: 'subtest'
+    bar: 'subtest'
     }
   });
   var SubSubTest = SubTest.$extend({
     __classvars__ : {
-      foo: 999
+    foo: 999
     }
   });
 
